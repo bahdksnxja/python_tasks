@@ -208,11 +208,16 @@ flowchart LR
 ```
 先要将远程仓库关联到本地仓库
 GitHub上传流程(总结)：
-1.cd python_tasks/   跳转到GitHub目录下
-2.git add . （将所有变更提交到本地仓库）；
-3.git add test.md
-4.git commit -m "测试文件"   添加操作备注
-5.git push （本地仓库推送到远程仓库）
+1.cd python_tasks/   跳转到GitHub目录下（或者找到文件右击，Git Bash Here）
+2.git init  初始化
+报错：Reinitialized existing Git repository in…  说明已经存在.git文件了
+3.git add . 
+提交到缓存区。这里的"add"和“ . ”中间有个空格。如果不写空格，git无法识别。“add .” 这里就是添加所有文件的意思
+4.git add test.md   
+该操作可以直接添加文件
+5.git commit -m "测试文件"   添加操作备注
+6.git push （本地仓库推送到远程仓库）
+是将本地版本库的分支推送到远程服务器上对应的分支,提交到远程的github仓库,。（此操作目的是把本地仓库push到github上面
 
 ```
 
