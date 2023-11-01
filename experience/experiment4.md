@@ -6,9 +6,9 @@
 
 姓名： 谭志峰
 
-Github地址：<https://github.com/yourusername/python_course>
+Github地址    : https://github.com/bahdksnxja/python_tasks
 
-CodeWars地址：<https://www.codewars.com/users/yourusername>
+CodeWars地址：：https://www.codewars.com/users/bahdksnxja
 
 ---
 
@@ -16,7 +16,72 @@ CodeWars地址：<https://www.codewars.com/users/yourusername>
 
 1. 学习Python字典
 2. 学习Python用户输入和while循环
+```
+#练习6.3
+dics = {
+    'list':'列表',
+    'var':'变量',
+    'int':'整型',
+    'boolean':'布尔',
+    'str':'字符串'
+    }
+print('dics[\'list\']'+':' + dics['list'])
+print('dics[\'var\']'+':' + dics['var'])
+print('dics[\'int\']'+':' + dics['int'])
+print('dics[\'boolean\']'+':' + dics['boolean'])
+print('dics[\'str\']'+':' + dics['str'])
+```
 
+```
+#练习6.5
+water={
+    'a' : 'aa',
+    'b' : 'bb',
+    'c' : 'cc',
+    'd' : 'dd'
+}
+for w,n in water.items():
+    print(f"The {w.title()} runs through {n.title()}.")
+for w in water.keys():
+    print(w)
+for n in water.values():
+    print(n)
+```
+
+```
+#练习6.9
+favorite_places={
+    'yuan_lin':{
+        'name':'yuan lin',
+        'old':24,
+        'thinks':'happy',
+        'friend':'zhao hailin',
+        'urban':'Bei jing',
+        },
+
+    'zhao_hai_lin':{
+        'name':'zhao hai lin',
+        'old':24,
+        'thinks':'happy',
+        'friend':'yuan lin',
+        'urban':'Bei jing',
+        },
+
+    'wang_jin':{
+        'name':'wang jin',
+        'old':24,
+        'thinks':'happy',
+        'friend':'wang jin',
+        'urban':'Bei jing',
+        },
+    }
+for peoples,lis in favorite_places.items():
+    print(peoples)
+    for n,m in lis.items():
+        print(f"{n}:{m}")
+    print('\n')
+
+```
 ## 实验环境
 
 1. Git
@@ -30,12 +95,6 @@ CodeWars地址：<https://www.codewars.com/users/yourusername>
 
 Python列表操作
 
-完成教材《Python编程从入门到实践》下列章节的练习：
-
-- 第6章 字典
-- 第7章 用户输入和while循环
-
----
 
 ### 第二部分
 
@@ -44,84 +103,73 @@ Python列表操作
 ---
 
 #### 第一题：淘气还是乖孩子（Naughty or Nice）
-
-难度： 7kyu
-
-圣诞老人要来镇上了，他需要你帮助找出谁是淘气的或善良的。你将会得到一整年的JSON数据，按照这个格式：
-
-```python
-{
-    January: {
-        '1': 'Naughty','2': 'Naughty', ..., '31': 'Nice'
-    },
-    February: {
-        '1': 'Nice','2': 'Naughty', ..., '28': 'Nice'
-    },
-    ...
-    December: {
-        '1': 'Nice','2': 'Nice', ..., '31': 'Naughty'
-    }
-}
-```
-
-你的函数应该返回 "Naughty!"或 "Nice!"，这取决于在某一年发生的总次数（以较大者为准）。如果两者相等，则返回 "Nice！"。
 代码提交地址：
 <https://www.codewars.com/kata/5662b14e0a1fb8320a00005c>
+
+```python
+def naughty_or_nice(data):
+    naughty_count = 0
+    nice_count = 0
+
+    for month in data:
+        for day in data[month]:
+            if data[month][day] == 'Naughty':
+                naughty_count += 1
+            elif data[month][day] == 'Nice':
+                nice_count += 1
+
+    if nice_count >= naughty_count:
+        return "Nice!"
+    else:
+        return "Naughty!"
+
+# Example usage
+data = {
+    'January': {
+        '1': 'Naughty', '2': 'Naughty', '31': 'Nice'
+    },
+    'February': {
+        '1': 'Nice', '2': 'Naughty', '28': 'Nice'
+    },
+    'December': {
+        '1': 'Nice', '2': 'Nice', '31': 'Naughty'
+    }
+}
+
+result = naughty_or_nice(data)
+print(result)
+```
+
 
 ---
 
 #### 第二题： 观察到的PIN（The observed PIN）
-
-难度：4kyu
-
-好了，侦探，我们的一个同事成功地观察到了我们的目标人物，抢劫犯罗比。我们跟踪他到了一个秘密仓库，我们认为在那里可以找到所有被盗的东西。这个仓库的门被一个电子密码锁所保护。不幸的是，我们的间谍不确定他看到的密码，当罗比进入它时。
-
-键盘的布局如下：
-
-```python
-┌───┬───┬───┐
-│ 1 │ 2 │ 3 │
-├───┼───┼───┤
-│ 4 │ 5 │ 6 │
-├───┼───┼───┤
-│ 7 │ 8 │ 9 │
-└───┼───┼───┘
-    │ 0 │
-    └───┘
-```
-
-他注意到密码1357，但他也说，他看到的每个数字都有可能是另一个相邻的数字（水平或垂直，但不是对角线）。例如，代替1的也可能是2或4。而不是5，也可能是2、4、6或8。
-
-他还提到，他知道这种锁。你可以无限制地输入错误的密码，但它们最终不会锁定系统或发出警报。这就是为什么我们可以尝试所有可能的（*）变化。
-
-*可能的意义是：观察到的PIN码本身和考虑到相邻数字的所有变化。
-
-你能帮助我们找到所有这些变化吗？如果有一个函数，能够返回一个列表，其中包含一个长度为1到8位的观察到的PIN的所有变化，那就更好了。我们可以把这个函数命名为getPINs（在python中为get_pins，在C#中为GetPINs）。
-
-但请注意，所有的PINs，包括观察到的PINs和结果，都必须是字符串，因为有可能会有领先的 "0"。我们已经为你准备了一些测试案例。
-侦探，我们就靠你了!
 代码提交地址：
 <https://www.codewars.com/kata/5263c6999e0f40dee200059d>
+```
+Dict = {'1':['1','2','4'], '2':['1','2','3','5'], '3':['2','3','6'], '4':['1','4','5','7'], 
+        '5':['2','4','5','6','8'], '6':['3','5','6','9'], '7':['4','7','8'], '8':['5','7','8','9','0'], 
+        '9':['6','8','9'], '0':['0','8']}
+
+def get_pins(observed):
+    if len(observed) == 1:
+        return Dict[observed]
+    else:
+        res  = []
+        first = observed[0]
+        rest = get_pins(observed[1:])
+        for each in Dict[first]:
+            for every in rest:
+             res.append(each+every)
+        
+        return res
+```
 
 ---
 
 #### 第三题： RNA到蛋白质序列的翻译（RNA to Protein Sequence Translation）
-
-难度：6kyu
-
-蛋白质是由DNA转录成RNA，然后转译成蛋白质的中心法则。RNA和DNA一样，是由糖骨架（在这种情况下是核糖）连接在一起的长链核酸。每个由三个碱基组成的片段被称为密码子。称为核糖体的分子机器将RNA密码子转译成氨基酸链，称为多肽链，然后将其折叠成蛋白质。
-
-蛋白质序列可以像DNA和RNA一样很容易地可视化，作为大字符串。重要的是要注意，“停止”密码子不编码特定的氨基酸。它们的唯一功能是停止蛋白质的转译，因此它们不会被纳入多肽链中。“停止”密码子不应出现在最终的蛋白质序列中。为了节省您许多不必要（和乏味）的键入，已为您的氨基酸字典提供了键和值。
-
-给定一个RNA字符串，创建一个将RNA转译为蛋白质序列的函数。注意：测试用例将始终生成有效的字符串。
-
-```python
-protein（'UGCGAUGAAUGGGCUCGCUCC'）
-```
-
-将返回`CDEWARS`
-
-作为测试用例的一部分是一个真实世界的例子！最后一个示例测试用例对应着一种叫做绿色荧光蛋白的蛋白质，一旦被剪切到另一个生物体的基因组中，像GFP这样的蛋白质可以让生物学家可视化细胞过程！
+代码提交地址：
+<https://www.codewars.com/kata/555a03f259e2d1788c000077>
 
 Amino Acid Dictionary
 
@@ -173,66 +221,40 @@ Amino Acid Dictionary
 }
 ```
 
-代码提交地址：
-<https://www.codewars.com/kata/555a03f259e2d1788c000077>
+```
+def protein(rna):
+    # 从RNA链上三个字母一组成为一个密码子
+    codons = [rna[i:i+3] for i in range(0, len(rna), 3)]
+    chain = []
+    for codon in codons:
+        if PROTEIN_DICT[codon] != 'Stop':
+            chain.append(PROTEIN_DICT[codon])
+        else:
+            break
+    return ''.join(chain)
+print(protein('AUGGUUAGUUGA'))
+
+```
+
 
 ---
 
 #### 第四题： 填写订单（Thinkful - Dictionary drills: Order filler）
-
-难度：8kyu
-
-您正在经营一家在线业务，您的一天中很大一部分时间都在处理订单。随着您的销量增加，这项工作占用了更多的时间，不幸的是最近您遇到了一个情况，您接受了一个订单，但无法履行。
-
-您决定写一个名为`fillable()`的函数，它接受三个参数：一个表示您库存的字典`stock`，一个表示客户想要购买的商品的字符串`merch`，以及一个表示他们想购买的商品数量的整数n。如果您有足够的商品库存来完成销售，则函数应返回`True`，否则应返回`False`。
-
-有效的数据将始终被传入，并且n将始终大于等于1。
-
 代码提交地址：
 <https://www.codewars.com/kata/586ee462d0982081bf001f07/python>
 
+```
+def fillable(stock, merch, n):    
+    # 商品所对应的键可能不在字典中，所以要用get方法
+    # 不能用这个方法  stock[merch] >= n
+    return stock.get(merch, 0) >= n
+```
 ---
 
 #### 第五题： 莫尔斯码解码器（Decode the Morse code, advanced）
 
-难度： 4kyu
-
-在这个作业中，你需要为有线电报编写一个莫尔斯码解码器。
-有线电报通过一个有按键的双线路运行，当按下按键时，会连接线路，可以在远程站点上检测到。莫尔斯码将每个字符的传输编码为"点"（按下按键的短按）和"划"（按下按键的长按）的序列。
-
-在传输莫尔斯码时，国际标准规定：
-
-- "点" - 1个时间单位长。
-- "划" - 3个时间单位长。
-- 字符内点和划之间的暂停 - 1个时间单位长。
-- 单词内字符之间的暂停 - 3个时间单位长。
-- 单词间的暂停 - 7个时间单位长。
-
-但是，该标准没有规定"时间单位"有多长。实际上，不同的操作员会以不同的速度进行传输。一个业余人士可能需要几秒钟才能传输一个字符，一位熟练的专业人士可以每分钟传输60个单词，而机器人发射器可能会快得多。
-
-在这个作业中，我们假设消息的接收是由硬件自动执行的，硬件会定期检查线路，如果线路连接（远程站点的按键按下），则记录为1，如果线路未连接（远程按键弹起），则记录为0。消息完全接收后，它会以一个只包含0和1的字符串的形式传递给你进行解码。
-
-例如，消息`HEYJUDE`，即`·····−·−−··−−−··−−··`可以如下接收：
-
-```python
-1100110011001100000011000000111111001100111111001111110000000000000011001111110011111100111111000000110011001111110000001111110011001100000011
-```
-
-如您所见，根据标准，这个传输完全准确，硬件每个"点"采样了两次。
-
-因此，你的任务是实现两个函数：
-
-函数decodeBits(bits)，应该找出消息的传输速率，正确解码消息为点（.）、划（-）和空格（字符之间有一个空格，单词之间有三个空格），并将它们作为一个字符串返回。请注意，在消息的开头和结尾可能会出现一些额外的0，确保忽略它们。另外，如果你无法分辨特定的1序列是点还是划，请假设它是一个点。
-
-函数decodeMorse(morseCode)，它将接收上一个函数的输出，并返回一个可读的字符串。
-
-注意：出于编码目的，你必须使用ASCII字符.和-，而不是Unicode字符。
-
-莫尔斯码表已经预加载给你了（请查看解决方案设置，以获取在你的语言中使用它的标识符）。
-
-```python
-morseCodes(".--")  #to access the morse translation of ".--"
-```
+代码提交地址：
+<https://www.codewars.com/kata/decode-the-morse-code-advanced>
 
 下面是Morse码支持的完整字符列表：
 
@@ -293,84 +315,96 @@ $    ···–··–
 @    ·––·–·
 ```
 
-代码提交地址：
-<https://www.codewars.com/kata/decode-the-morse-code-advanced>
+```
+MORSE_CODE['_'] = ' '
 
+def decodeBits(bits):
+    # 去掉开始的0和结尾的0
+    bits = bits.strip('0')
+    
+    # if no zeros in bits
+    if '0' not in bits:
+        return '.'
+    
+    # check for multiple bits per dot
+    minOnes = min(len(s) for s in bits.split('0') if s)
+    minZeros = min(len(s) for s in bits.split('1') if s)
+    m = min(minOnes, minZeros)
+    
+    # decode bits to morse code
+    return bits.replace('111'*m, '-').replace('0000000'*m, ' _ ').replace('000'*m, ' ').replace('1'*m, '.').replace('0'*m, '')
+
+def decodeMorse(morseCode):
+    # decode morse code to letters
+    return ''.join(MORSE_CODE[c] for c in morseCode.split())
+
+```
 ---
 
 ### 第三部分
 
 使用Mermaid绘制程序流程图
 
-安装VSCode插件：
-
-- Markdown Preview Mermaid Support
-- Mermaid Markdown Syntax Highlighting
-
-使用Markdown语法绘制你的程序绘制程序流程图（至少一个），Markdown代码如下：
-
-![程序流程图](/Experiments/img/2023-08-05-22-00-00.png)
+**第四题**
 
 显示效果如下：
 
 ```mermaid
 flowchart LR
-    A[Start] --> B{Is it?}
-    B -->|Yes| C[OK]
-    C --> D[Rethink]
-    D --> B
-    B ---->|No| E[End]
+    A[Start] --> B{统计merch个数是否>=n}
+    B -->|Yes| C[True]
+    B ---->|No| D[False]
+    C -->E[end]
+    D -->E[end]
 ```
 
-查看Mermaid流程图语法-->[点击这里](https://mermaid.js.org/syntax/flowchart.html)
 
-使用Markdown编辑器（例如VScode）编写本次实验的实验报告，包括[实验过程与结果](#实验过程与结果)、[实验考查](#实验考查)和[实验总结](#实验总结)，并将其导出为 **PDF格式** 来提交。
-
-## 实验过程与结果
-
-请将实验过程与结果放在这里，包括：
-
-- [第一部分 Python列表操作和if语句](#第一部分)
-- [第二部分 Codewars Kata挑战](#第二部分)
-- [第三部分 使用Mermaid绘制程序流程图](#第三部分)
-
-注意代码需要使用markdown的代码块格式化，例如Git命令行语句应该使用下面的格式：
-
-![Git命令](/Experiments/img/2023-07-26-22-48.png)
-
-显示效果如下：
-
-```bash
-git init
-git add .
-git status
-git commit -m "first commit"
-```
-
-如果是Python代码，应该使用下面代码块格式，例如：
-
-![Python代码](/Experiments/img/2023-07-26-22-52-20.png)
-
-显示效果如下：
-
-```python
-def add_binary(a,b):
-    return bin(a+b)[2:]
-```
-
-代码运行结果的文本可以直接粘贴在这里。
-
-**注意：不要使用截图，Markdown文档转换为Pdf格式后，截图可能会无法显示。**
 
 ## 实验考查
 
 请使用自己的语言并使用尽量简短代码示例回答下面的问题，这些问题将在实验检查时用于提问和答辩以及实际的操作。
 
 1. 字典的键和值有什么区别？
-2. 在读取和写入字典时，需要使用默认值可以使用什么方法？
-3. Python中的while循环和for循环有什么区别？
-4. 阅读[PEP 636 – Structural Pattern Matching: Tutorial](https://peps.python.org/pep-0636/), 总结Python 3.10中新出现的match语句的使用方法。
+   ```
+   字典的键（key）和值（value）是两个不同的概念。键（key）是字典中用于唯一标识和访问值的对象。它们必须是不可变的数据类型，如字符串、整数或元组。字典中的每个键必须是唯一的，如果有重复的键，则后面的键会覆盖前面的键。值（value）是字典中与键相关联的数据对象。它们可以是任何类型的数据，如字符串、整数、列表、字典等。一个字典可以包含多个键值对，每个键值对由一个键和一个值组成，键和值之间用冒号（:）分隔。在字典中，通过键可以快速访问对应的值，这是字典的主要特点之一。键和值之间是一一对应的关系，通过键可以找到对应的值，但通过值无法确定对应的键。
+   ```
 
+2. 在读取和写入字典时，需要使用默认值可以使用什么方法？
+   ```
+   在Python中，可以使用get()方法来读取字典中的值，并且可以设置默认值。get()方法接受两个参数，第一个参数是要获取的键，第二个参数是默认值。如果字典中存在该键，则返回对应的值；如果字典中不存在该键，则返回设置的默认值。在写入字典时，可以使用索引赋值的方式，如果键存在则更新对应的值，如果键不存在则新增键值对
+   ```
+3. Python中的while循环和for循环有什么区别？
+   ```
+   (1)while循环适用于不知道循环次数的情况，而for循环适用于已知循环次数的情况。(2)while循环的循环条件是在循环体内部进行判断的，而for循环的循环条件是在循环头部进行判断的。(3)while循环的循环条件可以是任何表达式，只要结果为True或False，而for循环的循环条件必须是可迭代对象，如列表、元组、字符串等。(4)while循环可以使用break和continue语句来控制循环的流程，而for循环也可以使用break和continue语句，但是它还可以使用else语句，在循环结束后执行一些操作
+   ```
+4. 阅读[PEP 636 – Structural Pattern Matching: Tutorial](https://peps.python.org/pep-0636/), 总结Python 3.10中新出现的match语句的使用方法。
+```
+在Python 3.10中，引入了一种新的语句match，用于实现结构化模式匹配。该语句可以用于对不同的数据结构进行匹配和解构，类似于其他编程语言中的模式匹配功能。
+
+以下是Python 3.10中match语句的使用方法总结：
+
+match语句由match关键字开始，后面跟着要匹配的表达式和一系列的case分支。
+
+case分支由case关键字开始，后面跟着要匹配的模式和一个冒号（:）。
+
+每个case分支可以包含一个或多个模式，用逗号分隔。模式可以是常量、变量、类型、字面量、通配符等。
+
+当match语句执行时，它会按顺序检查每个case分支，直到找到与表达式匹配的模式。一旦找到匹配的模式，相应的代码块将被执行。
+
+每个case分支的代码块可以包含任意的Python代码，可以使用匹配到的模式解构数据。
+
+case分支可以使用|操作符连接多个模式，表示多个模式之间的或关系。
+
+case分支可以使用if子句来添加额外的条件，只有当条件为真时，才会执行对应的代码块。
+
+case分支可以使用_作为通配符，表示匹配任意值。
+
+case分支可以使用...表示省略匹配，用于匹配任意数量的元素。
+
+match语句可以使用case _:作为默认分支，用于处理未匹配到的情况。
+```
 ## 实验总结
 
 总结一下这次实验你学习和使用到的知识，例如：编程工具的使用、数据结构、程序语言的语法、算法、编程技巧、编程思想。
+
+**通过这次实验学习和掌握了字典在操作的时候的注意事项，在读取和写入的时候使用相应的方法，其次在写代码的时候一定要注意规范，不然就容易报错，debug的过程也会变长。**
