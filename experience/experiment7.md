@@ -1,14 +1,16 @@
 # 实验七 Python面向对象编程
 
-班级： 21计科1
+班级： 21计科01
 
-学号： 202302200000
+学号： B20210102113
 
-姓名： 张三
+姓名： 谭志峰
 
-Github地址：<https://github.com/yourusername/python_course>
 
-CodeWars地址：<https://www.codewars.com/users/yourusername>
+Github地址    : https://github.com/bahdksnxja/python_tasks
+
+CodeWars地址：：https://www.codewars.com/users/bahdksnxja
+
 
 ---
 
@@ -240,7 +242,6 @@ user.rank # => -7 # rank was upgraded to -7
 
 使用Markdown语法绘制你的程序绘制程序类图（至少一个），Markdown代码如下：
 
-![程序类图](/Experiments/img/2023-08-08-22-47-53.png)
 
 显示效果如下：
 
@@ -283,44 +284,356 @@ classDiagram
 
 - [第一部分 Python面向对象编程](#第一部分)
 - [第二部分 Codewars Kata挑战](#第二部分)
-- [第三部分 使用Mermaid绘制程序流程图](#第三部分)
-
-注意代码需要使用markdown的代码块格式化，例如Git命令行语句应该使用下面的格式：
-
-![Git命令](/Experiments/img/2023-07-26-22-48.png)
-
-显示效果如下：
-
-```bash
-git init
-git add .
-git status
-git commit -m "first commit"
+  #### 第一题：面向对象的海盗
+```python
+class Ship:
+    def __init__(self, draft, crew):
+        self.draft = draft
+        self.crew = crew
+    def is_worth_it(self):
+        return self.draft - self.crew * 1.5 > 20
 ```
 
-如果是Python代码，应该使用下面代码块格式，例如：
 
-![Python代码](/Experiments/img/2023-07-26-22-52-20.png)
 
-显示效果如下：
+#### 第二题： 搭建积木    
+```python
+ class Block:
+    
+    def __init__(self, args):
+        self.width = args[0]
+        self.length = args[1]
+        self.height = args[2]
+        
+    def get_width(self):
+        return self.width
+    
+    def get_length(self):
+        return self.length
+    
+    def get_height(self):
+        return self.height
+    
+    def get_volume(self):
+        return self.width * self.length * self.height
+    
+    def get_surface_area(self):
+        return 2 * (self.width * self.length + self.width * self.height + self.length * self.height)
+
+```
+
+
+#### 第三题： 分页助手    
+```python
+ import math
+
+class PaginationHelper:
+    
+    def __init__(self, collection, items_per_page):
+        self.collection = collection
+        self.items_per_page = items_per_page
+        
+    def item_count(self):
+        return len(self.collection)
+    
+    def page_count(self):
+        return math.ceil(self.item_count() / self.items_per_page)
+    
+    def page_item_count(self, page_index):
+        if page_index < 0 or page_index >= self.page_count():
+            return -1
+        elif page_index == self.page_count() - 1: 
+            
+            last_page = self.item_count() % self.items_per_page
+            return self.items_per_page if last_page == 0 else last_page
+        else:
+            return self.items_per_page
+        
+    def page_index(self, item_index):
+        if item_index < 0 or item_index >= self.item_count():
+            return -1
+        else:
+            return item_index // self.items_per_page
+
+```
+
+#### 第四题： 向量（Vector）类
+```python
+ from math import sqrt
+
+class Vector:
+
+    def __init__(self, iterable):
+        self._v = tuple(x for x in iterable)
+
+    def __str__(self):
+        return str(self._v).replace(' ', '')
+
+    def check(self, other):
+        if not len(self._v) == len(other._v):
+            raise ValueError('Vectors of different length')
+
+    def add(self, other):
+        self.check(other)
+        return Vector(s + o for s, o in zip(self._v, other._v))
+
+    def subtract(self, other):
+        self.check(other)
+        return Vector(s - o for s, o in zip(self._v, other._v))
+
+    def dot(self, other):
+        self.check(other)
+        return sum(s * o for s, o in zip(self._v, other._v))
+
+    def norm(self):
+        return sqrt(sum(x**2 for x in self._v))
+
+    def equals(self, other):
+        return self._v == other._v
+
+```
+
+
+#### 第五题： Codewars风格的等级系统
 
 ```python
-def add_binary(a,b):
-    return bin(a+b)[2:]
+ class User ():    
+    def __init__ (self):
+        self.RANKS = [-8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8]
+        self.rank = -8
+        self.rank_index = 0
+        self.progress = 0
+        
+    def inc_progress (self, rank):
+        rank_index = self.RANKS.index(rank)
+        
+        # 计算rank的差，得出可以获得多少进度
+        
+        # 完成的是同等级的题目
+        if rank_index == self.rank_index:
+            self.progress += 3
+            
+        # 完成的是比当前等级低一级的题目
+        elif rank_index == self.rank_index - 1:
+            self.progress += 1
+            
+        # 完成的是比当前等级高的题目
+        elif rank_index > self.rank_index:
+            d= rank_index - self.rank_index
+            self.progress += 10 * d * d
+        
+        # 如果进度大于100，升级，每减去100进度，升一级    
+        while self.progress >= 100:
+            self.rank_index += 1
+            self.rank = self.RANKS[self.rank_index]
+            self.progress -= 100    
+        
+            # 如果升到8级（最高级），进度被置为0
+            if self.rank == 8:
+                self.progress = 0
+                return
+
 ```
 
-代码运行结果的文本可以直接粘贴在这里。
+- [第三部分 使用Mermaid绘制程序流程图](#第三部分)
+以下是根据提供的 Python 代码生成的 Mermaid 类图：
 
-**注意：不要使用截图，Markdown文档转换为Pdf格式后，截图可能会无法显示。**
+### 第一题：面向对象的海盗
+
+```mermaid
+classDiagram
+    class Ship {
+        +draft: float
+        +crew: int
+        +is_worth_it(): bool
+    }
+```
+
+### 第二题：搭建积木
+
+```mermaid
+classDiagram
+    class Block {
+        +width: int
+        +length: int
+        +height: int
+        +get_width(): int
+        +get_length(): int
+        +get_height(): int
+        +get_volume(): int
+        +get_surface_area(): int
+    }
+```
+
+### 第三题：分页助手
+
+```mermaid
+classDiagram
+    class PaginationHelper {
+        +collection: list
+        +items_per_page: int
+        +item_count(): int
+        +page_count(): int
+        +page_item_count(page_index: int): int
+        +page_index(item_index: int): int
+    }
+```
+
+### 第四题：向量（Vector）类
+
+```mermaid
+classDiagram
+    class Vector {
+        -_v: tuple
+        +__init__(iterable: iterable)
+        +__str__(): str
+        +check(other: Vector)
+        +add(other: Vector): Vector
+        +subtract(other: Vector): Vector
+        +dot(other: Vector): int
+        +norm(): float
+        +equals(other: Vector): bool
+    }
+```
+
+### 第五题：Codewars风格的等级系统
+
+```mermaid
+classDiagram
+    class User {
+        -RANKS: list
+        -rank: int
+        -rank_index: int
+        -progress: int
+        +__init__()
+        +inc_progress(rank: int)
+    }
+```
+
+请将上述代码插入你的 Markdown 文档中，确保使用了支持 Mermaid 图的 Markdown 渲染器。
 
 ## 实验考查
 
 请使用自己的语言并使用尽量简短代码示例回答下面的问题，这些问题将在实验检查时用于提问和答辩以及实际的操作。
 
-1. Python的类中__init__方法起什么作用？
-2. Python语言中如何继承父类和改写（override）父类的方法。
-3. Python类有那些特殊的方法？它们的作用是什么？请举三个例子并编写简单的代码说明。
+**1. Python的类中__init__方法起什么作用？**
+   
+  在Python中，`__init__` 方法是一个特殊的方法，用于在创建类的实例时进行初始化操作。这个方法在对象实例化时会被自动调用。它的主要作用是执行一些在对象创建时必须进行的初始化工作，例如设置对象的属性或执行其他必要的操作。
+具体来说，`__init__` 方法用于初始化对象的属性。当你创建一个类的实例时，这个方法会被自动调用，允许你在对象创建时传递参数，并将这些参数用于设置对象的初始状态。
+
+示例：
+
+```python
+class MyClass:
+    def __init__(self, parameter1, parameter2):
+        self.attribute1 = parameter1
+        self.attribute2 = parameter2
+
+# 创建一个类的实例并传递参数
+my_instance = MyClass("value1", "value2")
+
+# 对象的属性已经被初始化
+print(my_instance.attribute1)  # 输出: value1
+print(my_instance.attribute2)  # 输出: value2
+```
+
+在上述例子中，`__init__` 方法接受两个参数，`parameter1` 和 `parameter2`，并将它们分别赋值给对象的属性 `attribute1` 和 `attribute2`。这样，在创建 `MyClass` 类的实例时，可以通过传递参数来初始化对象的状态。 
+
+**2. Python语言中如何继承父类和改写（override）父类的方法。**
+   
+在Python中，继承和方法重写是面向对象编程的重要概念之一。下面是一个简单的例子，说明如何在子类中继承父类并改写（override）父类的方法。
+
+```python
+class ParentClass:
+    def __init__(self, name):
+        self.name = name
+
+    def say_hello(self):
+        return f"Hello, I'm {self.name} from the ParentClass."
+
+class ChildClass(ParentClass):
+    def __init__(self, name, age):
+        # 使用 super() 调用父类的初始化方法
+        super().__init__(name)
+        self.age = age
+
+    # 重写父类的方法
+    def say_hello(self):
+        return f"Hello, I'm {self.name} and I'm {self.age} years old."
+
+# 创建父类对象
+parent_obj = ParentClass("Parent")
+
+# 调用父类方法
+print(parent_obj.say_hello())  # 输出: Hello, I'm Parent from the ParentClass.
+
+# 创建子类对象
+child_obj = ChildClass("Child", 10)
+
+# 调用子类方法，该方法重写了父类的方法
+print(child_obj.say_hello())  # 输出: Hello, I'm Child and I'm 10 years old.
+```
+
+在这个例子中，`ParentClass` 是父类，`ChildClass` 是子类。子类通过继承父类，可以使用父类的属性和方法。如果子类需要修改或者定制某个方法，可以在子类中重新定义该方法，即重写（override）父类的方法。在子类中通过`super()`调用父类的方法，可以保留父类的行为并在其基础上进行扩展。 
+
+**3. Python类有那些特殊的方法？它们的作用是什么？请举三个例子并编写简单的代码说明。**
+
+在Python中，类可以定义一些特殊方法（也称为魔术方法或双下划线方法），这些方法有着特殊的命名规则（以双下划线开头和结尾）。这些特殊方法允许类实例在特定的操作中表现得像内置类型一样。以下是三个常用的特殊方法及其作用的例子：
+
+1. `__init__`: 用于初始化对象的方法，在对象创建时自动调用。它允许在对象创建时执行一些必要的初始化操作。
+
+```python
+class MyClass:
+    def __init__(self, name):
+        self.name = name
+
+# 创建类的实例时，__init__ 方法会自动调用
+obj = MyClass("example")
+print(obj.name)  # 输出: example
+```
+
+2. `__str__`: 用于返回对象的可读性良好的字符串表示。当使用 `print` 函数或 `str()` 函数时，会自动调用该方法。
+
+```python
+class MyClass:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return f"MyClass instance with name: {self.name}"
+
+obj = MyClass("example")
+print(obj)  # 输出: MyClass instance with name: example
+```
+
+3. `__len__`: 用于返回对象的长度。当使用内置函数 `len()` 调用时，会自动调用该方法。
+   
+
+```python
+class MyList:
+    def __init__(self, items):
+        self.items = items
+
+    def __len__(self):
+        return len(self.items)
+
+my_list = MyList([1, 2, 3, 4, 5])
+print(len(my_list))  # 输出: 5
+```
+
+这些特殊方法允许你定制类的行为，使其在使用类似内置类型的操作时更符合预期。
 
 ## 实验总结
 
 总结一下这次实验你学习和使用到的知识，例如：编程工具的使用、数据结构、程序语言的语法、算法、编程技巧、编程思想。
+
+
+1. **继承和方法重写：** 子类可以通过继承父类的属性和方法，同时可以在需要时重写父类的方法，以定制子类的行为。
+
+2. **特殊方法：** Python中的类可以定义特殊方法，这些方法以双下划线开头和结尾，如 `__init__`、`__str__` 和 `__len__`。它们允许在特定的操作中定制类的行为，使对象更符合预期。
+
+3. **实例化和初始化：** `__init__` 方法用于在对象创建时执行初始化操作，允许传递参数以设置对象的初始状态。
+
+4. **字符串表示和长度：** `__str__` 方法用于返回对象的可读性良好的字符串表示，而 `__len__` 方法用于返回对象的长度，使类实例在使用内置函数时更方便。
+
+通过理解这些概念和方法，可以更灵活地设计和使用Python中的类，提高代码的可维护性和可扩展性。

@@ -1,14 +1,15 @@
 # 实验六 Python函数
 
-班级： 21计科1
+班级： 21计科01
 
-学号： 202302200000
+学号： B20210102113
 
-姓名： 张三
+姓名： 谭志峰
 
-Github地址：<https://github.com/yourusername/python_course>
 
-CodeWars地址：<https://www.codewars.com/users/yourusername>
+Github地址    : https://github.com/bahdksnxja/python_tasks
+
+CodeWars地址：：https://www.codewars.com/users/bahdksnxja
 
 ---
 
@@ -321,33 +322,162 @@ flowchart LR
 
 - [第一部分 Python函数](#第一部分)
 - [第二部分 Codewars Kata挑战](#第二部分)
-- [第三部分 使用Mermaid绘制程序流程图](#第三部分)
+- #### 第一题：编码聚会1
+```python
+def count_developers(lst):
+    count=0
+    for lsts in lst:
+        if lsts['continent']=='Europe' and lsts['language']=='JavaScript':
+            count+=1
+    return count
+```    
 
-注意代码需要使用markdown的代码块格式化，例如Git命令行语句应该使用下面的格式：
 
-![Git命令](/Experiments/img/2023-07-26-22-48.png)
-
-显示效果如下：
-
-```bash
-git init
-git add .
-git status
-git commit -m "first commit"
-```
-
-如果是Python代码，应该使用下面代码块格式，例如：
-
-![Python代码](/Experiments/img/2023-07-26-22-52-20.png)
-
-显示效果如下：
+#### 第二题： 使用函数进行计算   
 
 ```python
-def add_binary(a,b):
-    return bin(a+b)[2:]
-```
+def zero(func=None):
+    return 0 if func is None else func(0)
 
-代码运行结果的文本可以直接粘贴在这里。
+def one(func=None):
+    return 1 if func is None else func(1)
+
+def two(func=None):
+    return 2 if func is None else func(2)
+
+def three(func=None):
+    return 3 if func is None else func(3)
+
+def four(func=None):
+    return 4 if func is None else func(4)
+
+def five(func=None):
+    return 5 if func is None else func(5)
+
+def six(func=None):
+    return 6 if func is None else func(6)
+
+def seven(func=None):
+    return 7 if func is None else func(7)
+
+def eight(func=None):
+    return 8 if func is None else func(8)
+
+def nine(func=None):
+    return 9 if func is None else func(9)
+
+def plus(y):
+    return lambda x: x + y
+
+def minus(y):
+    return lambda x: x - y
+
+def times(y):
+    return lambda x: x * y
+
+def divided_by(y):
+    return lambda x: x // y
+
+```     
+
+
+#### 第三题： 缩短数值的过滤器(Number Shortening Filter)    
+```python
+def shorten_number(suffixes,base):
+    def my_filter(data):
+        try:
+            number = int(data)
+        except (TypeError, ValueError):
+            return str(data)
+        else:
+            i = 0
+            while number//base > 0 and i < len(suffixes)-1:
+                number //= base
+                i += 1
+            return str(number) + suffixes[i] 
+    
+    return my_filter
+
+```    
+
+
+#### 第四题： 编码聚会7
+```python
+def find_senior(lst):
+    max=0
+    lis=[]
+    for lsts in lst:
+        if lsts['age']>max:
+            lis.clear()
+            lis.append(lsts)
+            max=lsts['age']
+        elif lsts['age']==max:
+            lis.append(lsts)
+    return lis
+```     
+
+
+#### 第五题： Currying versus partial application
+```python
+from inspect import signature
+from functools import partial
+
+def curry_partial(main_func, *args):
+    
+    if not(callable(main_func)):
+        return main_func
+    
+    p = len(signature(main_func).parameters)
+    func = partial(main_func)
+    
+    for a in args:
+        if len(func.args) == p: break
+        func = partial(func, a)
+    
+    if len(func.args) < p:
+        return partial(curry_partial, main_func, *func.args)
+
+    return func()
+```     
+
+- [第三部分 使用Mermaid绘制程序流程图](#第三部分)
+
+### 第四题： 编码聚会7
+```mermaid
+flowchart LR
+A[Start] --> B[初始化变量max为0]
+B --> C[初始化空列表lis]
+C --> D[遍历lst中的每个字典lsts]
+D --> E{判断lsts的年龄是否大于max}
+E -->|Yes| F[清空lis 将lsts添加到lis中 并更新max为lsts的年龄]
+E -->|No| G{判断lsts的年龄是否等于max}
+G -->|Yes| H[将lsts添加到lis中]
+G -->|No| D
+F --> D
+H --> I[返回lis]
+I --> J[End]
+
+```    
+### 第五题： Currying versus partial application
+```mermaid
+flowchart LR
+A[Start] --> B[定义函数curry_partial]
+B --> C{判断main_func是否可调用}
+C -->|No| D["返回main_func"]
+C -->|Yes| E[初始化变量p为main_func参数的个数]
+E --> F[初始化变量func为main_func的偏函数]
+F --> G{判断func的参数个数是否等于p}
+G -->|Yes| H["返回func"]
+G -->|No| I[初始化变量a为args的第一个参数]
+I --> J{判断func的参数个数是否等于p}
+J -->|Yes| K["返回func"]
+J -->|No| L[将a作为func的参数之一]
+L --> M[将func作为函数curry_partial的参数之一]
+M --> E
+K --> N[返回func]
+N --> O[End]
+D --> O
+```   
 
 **注意：不要使用截图，Markdown文档转换为Pdf格式后，截图可能会无法显示。**
 
@@ -356,9 +486,41 @@ def add_binary(a,b):
 请使用自己的语言并使用尽量简短代码示例回答下面的问题，这些问题将在实验检查时用于提问和答辩以及实际的操作。
 
 1. 什么是函数式编程范式？
+```
+函数式编程（Functional Programming，简称FP）是一种编程范式，它将计算机程序视为数学上的函数计算。函数式编程强调函数的纯粹性和不可变性，即函数的输出只由输入决定，不受外部环境的影响，并且不会改变输入参数的值。函数式编程中的函数可以作为参数传递给其他函数，也可以作为返回值返回给调用者，这种方式称为高阶函数。函数式编程还支持函数的柯里化、惰性计算、尾递归等特性。Python中支持函数式编程，例如可以使用lambda表达式创建匿名函数，使用map、reduce、filter等高阶函数对列表进行操作。
+```
 2. 什么是lambda函数？请举例说明。
+```
+Lambda函数是一种匿名函数，它可以在一行代码中定义简单的函数，通常用于函数式编程中。Lambda函数由关键字lambda和一个或多个参数组成，后面跟着一个冒号和一个表达式，表达式的值就是这个匿名函数的返回值。Lambda函数可以作为参数传递给其他函数，也可以作为返回值返回给调用者。
+
+以下是一个简单的Lambda函数的示例，它将给定数字加上5并返回结果：
+```
+```
+add_five = lambda x: x + 5
+print(add_five(10))  # 输出结果为15
+```
 3. 什么是高阶函数？常用的高阶函数有哪些？这些高阶函数如何工作？使用简单的代码示例说明。
+```
+阶函数是指可以接受一个或多个函数作为参数，并/或者返回一个函数的函数。在函数式编程中，高阶函数是一种非常重要的概念，它可以增强代码的灵活性和可重用性。
+
+常用的高阶函数包括map()、filter()、reduce()和sorted()
+```
+```
+例如map()函数:
+map()函数：接受一个函数和一个可迭代对象作为参数，将函数应用于可迭代对象的每个元素，并返回一个新的可迭代对象。示例代码如下：
+numbers = [1, 2, 3, 4, 5]
+
+squared_numbers = list(map(lambda x: x**2, numbers))
+
+print(squared_numbers)  # 输出结果为 [1, 4, 9, 16, 25]
+
+```
+
+
+
 
 ## 实验总结
 
 总结一下这次实验你学习和使用到的知识，例如：编程工具的使用、数据结构、程序语言的语法、算法、编程技巧、编程思想。
+
+**深入研究了python语言的函数式编程特性和语法。我通过掌握一些编程技巧，例如运用lambda函数和高阶函数简化代码，同时领悟了函数式编程思想对编程的深远影响。总体而言，这次实践使我对函数式编程有了更深层次的理解，同时也增强了我在Python中应用函数式编程的技能**

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>experiment7.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E5%AE%9E%E9%AA%8C%E4%B8%83-python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B">实验七 Python面向对象编程</h1>
+<p>班级： 21计科01</p>
+<p>学号： B20210102113</p>
+<p>姓名： 谭志峰</p>
+<p>Github地址    : https://github.com/bahdksnxja/python_tasks</p>
+<p>CodeWars地址：：https://www.codewars.com/users/bahdksnxja</p>
+<hr>
+<h2 id="%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84">实验目的</h2>
+<ol>
+<li>学习Python类和继承的基础知识</li>
+<li>学习namedtuple和DataClass的使用</li>
+</ol>
+<h2 id="%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83">实验环境</h2>
+<ol>
+<li>Git</li>
+<li>Python 3.10</li>
+<li>VSCode</li>
+<li>VSCode插件</li>
+</ol>
+<h2 id="%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9%E5%92%8C%E6%AD%A5%E9%AA%A4">实验内容和步骤</h2>
+<h3 id="%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86">第一部分</h3>
+<p>Python面向对象编程</p>
+<p>完成教材《Python编程从入门到实践》下列章节的练习：</p>
+<ul>
+<li>第9章 类</li>
+</ul>
+<hr>
+<h3 id="%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86">第二部分</h3>
+<p>在<a href="https://www.codewars.com">Codewars网站</a>注册账号，完成下列Kata挑战：</p>
+<hr>
+<h4 id="%E7%AC%AC%E4%B8%80%E9%A2%98%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%B5%B7%E7%9B%97">第一题：面向对象的海盗</h4>
+<p>难度： 8kyu</p>
+<p>啊哈，伙计!</p>
+<p>你是一个小海盗团的首领。而且你有一个计划。在OOP的帮助下，你希望建立一个相当有效的系统来识别船上有大量战利品的船只。
+对你来说，不幸的是，现在的人很重，那么你怎么知道一艘船上装的是黄金而不是人呢？</p>
+<p>你首先要写一个通用的船舶类。</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ship</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, draft, crew)</span>:</span>
+        self.draft = draft
+        self.crew = crew
+</div></code></pre>
+<p>每当你的间谍看到一艘新船进入码头，他们将根据观察结果创建一个新的船舶对象。</p>
+<ul>
+<li><code>draft</code>吃水 - 根据船在水中的高度来估计它的重量</li>
+<li><code>crew</code>船员 - 船上船员的数量</li>
+</ul>
+<p><code>Titanic = Ship(15, 10)</code></p>
+<p>任务</p>
+<p>你可以访问船舶的 &quot;draft(吃水) &quot;和 &quot;crew(船员)&quot;。&quot;draft(吃水) &quot;是船的总重量，&quot;船员 &quot;是船上的人数。
+每个船员都会给船的吃水增加1.5个单位。如果除去船员的重量后，吃水仍然超过20，那么这艘船就值得掠夺。任何有这么重的船一定有很多战利品!
+添加方法
+<code>is_worth_it</code>
+来决定这艘船是否值得掠夺。</p>
+<p>例如：</p>
+<pre class="hljs"><code><div>Titanic.is_worth_it()
+<span class="hljs-literal">False</span>
+</div></code></pre>
+<p>祝你好运，愿你能找到金子!</p>
+<p>代码提交地址：
+<a href="https://www.codewars.com/kata/54fe05c4762e2e3047000add">https://www.codewars.com/kata/54fe05c4762e2e3047000add</a></p>
+<hr>
+<h4 id="%E7%AC%AC%E4%BA%8C%E9%A2%98-%E6%90%AD%E5%BB%BA%E7%A7%AF%E6%9C%A8">第二题： 搭建积木</h4>
+<p>难度：7kyu</p>
+<p>写一个创建Block的类（Duh.）
+构造函数应该接受一个数组作为参数，这个数组将包含3个整数，其形式为<code>[width, length, height]</code>，Block应该由这些整数创建。</p>
+<p>定义这些方法:</p>
+<ul>
+<li><code>get_width()</code> return the width of the <code>Block</code></li>
+<li><code>get_length()</code> return the length of the <code>Block</code></li>
+<li><code>get_height()</code> return the height of the <code>Block</code></li>
+<li><code>get_volume()</code> return the volume of the <code>Block</code></li>
+<li><code>get_surface_area()</code> return the surface area of the <code>Block</code></li>
+</ul>
+<p>例子：</p>
+<pre class="hljs"><code><div>b = Block([<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>]) <span class="hljs-comment"># create a `Block` object with a width of `2` a length of `4` and a height of `6`</span>
+b.get_width() <span class="hljs-comment"># return 2    </span>
+b.get_length() <span class="hljs-comment"># return 4</span>
+b.get_height() <span class="hljs-comment"># return 6</span>
+b.get_volume() <span class="hljs-comment"># return 48</span>
+b.get_surface_area() <span class="hljs-comment"># return 88</span>
+</div></code></pre>
+<p>注意： 不需要检查错误的参数。</p>
+<p>代码提交地址：
+<a href="https://www.codewars.com/kata/55b75fcf67e558d3750000a3">https://www.codewars.com/kata/55b75fcf67e558d3750000a3</a></p>
+<hr>
+<h4 id="%E7%AC%AC%E4%B8%89%E9%A2%98-%E5%88%86%E9%A1%B5%E5%8A%A9%E6%89%8B">第三题： 分页助手</h4>
+<p>难度：5kyu</p>
+<p>在这个练习中，你将加强对分页的掌握。你将完成PaginationHelper类，这是一个实用类，有助于查询与数组有关的分页信息。
+该类被设计成接收一个值的数组和一个整数，表示每页允许多少个项目。集合/数组中包含的值的类型并不相关。</p>
+<p>下面是一些关于如何使用这个类的例子：</p>
+<pre class="hljs"><code><div>helper = PaginationHelper([<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>,<span class="hljs-string">'d'</span>,<span class="hljs-string">'e'</span>,<span class="hljs-string">'f'</span>], <span class="hljs-number">4</span>)
+helper.page_count() <span class="hljs-comment"># should == 2</span>
+helper.item_count() <span class="hljs-comment"># should == 6</span>
+helper.page_item_count(<span class="hljs-number">0</span>)  <span class="hljs-comment"># should == 4</span>
+helper.page_item_count(<span class="hljs-number">1</span>) <span class="hljs-comment"># last page - should == 2</span>
+helper.page_item_count(<span class="hljs-number">2</span>) <span class="hljs-comment"># should == -1 since the page is invalid</span>
+
+<span class="hljs-comment"># page_index takes an item index and returns the page that it belongs on</span>
+helper.page_index(<span class="hljs-number">5</span>) <span class="hljs-comment"># should == 1 (zero based index)</span>
+helper.page_index(<span class="hljs-number">2</span>) <span class="hljs-comment"># should == 0</span>
+helper.page_index(<span class="hljs-number">20</span>) <span class="hljs-comment"># should == -1</span>
+helper.page_index(<span class="hljs-number">-10</span>) <span class="hljs-comment"># should == -1 because negative indexes are invalid</span>
+</div></code></pre>
+<p>代码提交地址：
+<a href="https://www.codewars.com/kata/515bb423de843ea99400000a">https://www.codewars.com/kata/515bb423de843ea99400000a</a></p>
+<hr>
+<h4 id="%E7%AC%AC%E5%9B%9B%E9%A2%98-%E5%90%91%E9%87%8Fvector%E7%B1%BB">第四题： 向量（Vector）类</h4>
+<p>难度： 5kyu</p>
+<p>创建一个支持加法、减法、点积和向量长度的向量（Vector）类。</p>
+<p>举例来说：</p>
+<pre class="hljs"><code><div>a = Vector([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+b = Vector([<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])
+c = Vector([<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>])
+
+a.add(b)      <span class="hljs-comment"># should return a new Vector([4, 6, 8])</span>
+a.subtract(b) <span class="hljs-comment"># should return a new Vector([-2, -2, -2])</span>
+a.dot(b)      <span class="hljs-comment"># should return 1*3 + 2*4 + 3*5 = 26</span>
+a.norm()      <span class="hljs-comment"># should return sqrt(1^2 + 2^2 + 3^2) = sqrt(14)</span>
+a.add(c)      <span class="hljs-comment"># raises an exception</span>
+</div></code></pre>
+<p>如果你试图对两个不同长度的向量进行加减或点缀，你必须抛出一个错误。
+向量类还应该提供：</p>
+<ul>
+<li>一个 <code>__str__</code> 方法，这样 <code>str(a) === '(1,2,3)'</code></li>
+<li>一个equals方法，用来检查两个具有相同成分的向量是否相等。</li>
+</ul>
+<p>注意：测试案例将利用用户提供的equals方法。</p>
+<p>代码提交地址：
+<a href="https://www.codewars.com/kata/526dad7f8c0eb5c4640000a4">https://www.codewars.com/kata/526dad7f8c0eb5c4640000a4</a></p>
+<hr>
+<h4 id="%E7%AC%AC%E4%BA%94%E9%A2%98-codewars%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%AD%89%E7%BA%A7%E7%B3%BB%E7%BB%9F">第五题： Codewars风格的等级系统</h4>
+<p>难度： 4kyu</p>
+<p>编写一个名为User的类，用于计算用户在类似于Codewars使用的排名系统中的进步量。</p>
+<p>业务规则：</p>
+<ul>
+<li>一个用户从等级-8开始，可以一直进步到8。</li>
+<li>没有0（零）等级。在-1之后的下一个等级是1。</li>
+<li>用户将完成活动。这些活动也有等级。</li>
+<li>每当用户完成一个有等级的活动，用户的等级进度就会根据活动的等级进行更新。</li>
+<li>完成活动获得的进度是相对于用户当前的等级与活动的等级而言的。</li>
+<li>用户的等级进度从零开始，每当进度达到100时，用户的等级就会升级到下一个等级。</li>
+<li>在上一等级时获得的任何剩余进度都将被应用于下一等级的进度（我们不会丢弃任何进度）。例外的情况是，如果没有其他等级的进展（一旦你达到8级，就没有更多的进展了）。</li>
+<li>一个用户不能超过8级。</li>
+<li>唯一可接受的等级值范围是-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8。任何其他的值都应该引起错误。</li>
+</ul>
+<p>逻辑案例：</p>
+<ul>
+<li>如果一个排名为-8的用户完成了一个排名为-7的活动，他们将获得10的进度。</li>
+<li>如果一个排名为-8的用户完成了排名为-6的活动，他们将获得40的进展。</li>
+<li>如果一个排名为-8的用户完成了排名为-5的活动，他们将获得90的进展。</li>
+<li>如果一个排名-8的用户完成了排名-4的活动，他们将获得160个进度，从而使该用户升级到排名-7，并获得60个进度以获得下一个排名。</li>
+<li>如果一个等级为-1的用户完成了一个等级为1的活动，他们将获得10个进度（记住，零等级会被忽略）。</li>
+</ul>
+<p>代码案例：</p>
+<pre class="hljs"><code><div>user = User()
+user.rank <span class="hljs-comment"># =&gt; -8</span>
+user.progress <span class="hljs-comment"># =&gt; 0</span>
+user.inc_progress(<span class="hljs-number">-7</span>)
+user.progress <span class="hljs-comment"># =&gt; 10</span>
+user.inc_progress(<span class="hljs-number">-5</span>) <span class="hljs-comment"># will add 90 progress</span>
+user.progress <span class="hljs-comment"># =&gt; 0 # progress is now zero</span>
+user.rank <span class="hljs-comment"># =&gt; -7 # rank was upgraded to -7</span>
+</div></code></pre>
+<p>代码提交地址：
+<a href="https://www.codewars.com/kata/51fda2d95d6efda45e00004e">https://www.codewars.com/kata/51fda2d95d6efda45e00004e</a></p>
+<hr>
+<h3 id="%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86">第三部分</h3>
+<p>使用Mermaid绘制程序的<strong>类图</strong></p>
+<p>安装VSCode插件：</p>
+<ul>
+<li>Markdown Preview Mermaid Support</li>
+<li>Mermaid Markdown Syntax Highlighting</li>
+</ul>
+<p>使用Markdown语法绘制你的程序绘制程序类图（至少一个），Markdown代码如下：</p>
+<p>显示效果如下：</p>
+<pre><code class="language-mermaid"><div class="mermaid">---
+title: Animal example
+---
+classDiagram
+    note "From Duck till Zebra"
+    Animal <|-- Duck
+    note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
+    Animal <|-- Fish
+    Animal <|-- Zebra
+    Animal : +int age
+    Animal : +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck{
+        +String beakColor
+        +swim()
+        +quack()
+    }
+    class Fish{
+        -int sizeInFeet
+        -canEat()
+    }
+    class Zebra{
+        +bool is_wild
+        +run()
+    }
+</div></code></pre>
+<p>查看Mermaid类图的语法--&gt;<a href="https://mermaid.js.org/syntax/classDiagram.html">点击这里</a></p>
+<p>使用Markdown编辑器（例如VScode）编写本次实验的实验报告，包括<a href="#%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B%E4%B8%8E%E7%BB%93%E6%9E%9C">实验过程与结果</a>、<a href="#%E5%AE%9E%E9%AA%8C%E8%80%83%E6%9F%A5">实验考查</a>和<a href="#%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93">实验总结</a>，并将其导出为 <strong>PDF格式</strong> 来提交。</p>
+<h2 id="%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B%E4%B8%8E%E7%BB%93%E6%9E%9C">实验过程与结果</h2>
+<p>请将实验过程与结果放在这里，包括：</p>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86">第一部分 Python面向对象编程</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86">第二部分 Codewars Kata挑战</a>
+<h4 id="%E7%AC%AC%E4%B8%80%E9%A2%98%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%B5%B7%E7%9B%97">第一题：面向对象的海盗</h4>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ship</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, draft, crew)</span>:</span>
+        self.draft = draft
+        self.crew = crew
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_worth_it</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> self.draft - self.crew * <span class="hljs-number">1.5</span> &gt; <span class="hljs-number">20</span>
+</div></code></pre>
+<h4 id="%E7%AC%AC%E4%BA%8C%E9%A2%98-%E6%90%AD%E5%BB%BA%E7%A7%AF%E6%9C%A8">第二题： 搭建积木</h4>
+<pre class="hljs"><code><div> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Block</span>:</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, args)</span>:</span>
+        self.width = args[<span class="hljs-number">0</span>]
+        self.length = args[<span class="hljs-number">1</span>]
+        self.height = args[<span class="hljs-number">2</span>]
+        
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_width</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> self.width
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_length</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> self.length
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_height</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> self.height
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_volume</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> self.width * self.length * self.height
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_surface_area</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * (self.width * self.length + self.width * self.height + self.length * self.height)
+
+</div></code></pre>
+<h4 id="%E7%AC%AC%E4%B8%89%E9%A2%98-%E5%88%86%E9%A1%B5%E5%8A%A9%E6%89%8B">第三题： 分页助手</h4>
+<pre class="hljs"><code><div> <span class="hljs-keyword">import</span> math
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaginationHelper</span>:</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, collection, items_per_page)</span>:</span>
+        self.collection = collection
+        self.items_per_page = items_per_page
+        
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">item_count</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> len(self.collection)
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">page_count</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> math.ceil(self.item_count() / self.items_per_page)
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">page_item_count</span><span class="hljs-params">(self, page_index)</span>:</span>
+        <span class="hljs-keyword">if</span> page_index &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> page_index &gt;= self.page_count():
+            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+        <span class="hljs-keyword">elif</span> page_index == self.page_count() - <span class="hljs-number">1</span>: 
+            
+            last_page = self.item_count() % self.items_per_page
+            <span class="hljs-keyword">return</span> self.items_per_page <span class="hljs-keyword">if</span> last_page == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> last_page
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> self.items_per_page
+        
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">page_index</span><span class="hljs-params">(self, item_index)</span>:</span>
+        <span class="hljs-keyword">if</span> item_index &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> item_index &gt;= self.item_count():
+            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> item_index // self.items_per_page
+
+</div></code></pre>
+<h4 id="%E7%AC%AC%E5%9B%9B%E9%A2%98-%E5%90%91%E9%87%8Fvector%E7%B1%BB">第四题： 向量（Vector）类</h4>
+<pre class="hljs"><code><div> <span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> sqrt
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vector</span>:</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, iterable)</span>:</span>
+        self._v = tuple(x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> iterable)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__str__</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> str(self._v).replace(<span class="hljs-string">' '</span>, <span class="hljs-string">''</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check</span><span class="hljs-params">(self, other)</span>:</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> len(self._v) == len(other._v):
+            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">'Vectors of different length'</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(self, other)</span>:</span>
+        self.check(other)
+        <span class="hljs-keyword">return</span> Vector(s + o <span class="hljs-keyword">for</span> s, o <span class="hljs-keyword">in</span> zip(self._v, other._v))
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">subtract</span><span class="hljs-params">(self, other)</span>:</span>
+        self.check(other)
+        <span class="hljs-keyword">return</span> Vector(s - o <span class="hljs-keyword">for</span> s, o <span class="hljs-keyword">in</span> zip(self._v, other._v))
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dot</span><span class="hljs-params">(self, other)</span>:</span>
+        self.check(other)
+        <span class="hljs-keyword">return</span> sum(s * o <span class="hljs-keyword">for</span> s, o <span class="hljs-keyword">in</span> zip(self._v, other._v))
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">norm</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> sqrt(sum(x**<span class="hljs-number">2</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> self._v))
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">equals</span><span class="hljs-params">(self, other)</span>:</span>
+        <span class="hljs-keyword">return</span> self._v == other._v
+
+</div></code></pre>
+<h4 id="%E7%AC%AC%E4%BA%94%E9%A2%98-codewars%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%AD%89%E7%BA%A7%E7%B3%BB%E7%BB%9F">第五题： Codewars风格的等级系统</h4>
+<pre class="hljs"><code><div> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-params">()</span>:</span>    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span> <span class="hljs-params">(self)</span>:</span>
+        self.RANKS = [<span class="hljs-number">-8</span>, <span class="hljs-number">-7</span>, <span class="hljs-number">-6</span>, <span class="hljs-number">-5</span>, <span class="hljs-number">-4</span>, <span class="hljs-number">-3</span>, <span class="hljs-number">-2</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>]
+        self.rank = <span class="hljs-number">-8</span>
+        self.rank_index = <span class="hljs-number">0</span>
+        self.progress = <span class="hljs-number">0</span>
+        
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inc_progress</span> <span class="hljs-params">(self, rank)</span>:</span>
+        rank_index = self.RANKS.index(rank)
+        
+        <span class="hljs-comment"># 计算rank的差，得出可以获得多少进度</span>
+        
+        <span class="hljs-comment"># 完成的是同等级的题目</span>
+        <span class="hljs-keyword">if</span> rank_index == self.rank_index:
+            self.progress += <span class="hljs-number">3</span>
+            
+        <span class="hljs-comment"># 完成的是比当前等级低一级的题目</span>
+        <span class="hljs-keyword">elif</span> rank_index == self.rank_index - <span class="hljs-number">1</span>:
+            self.progress += <span class="hljs-number">1</span>
+            
+        <span class="hljs-comment"># 完成的是比当前等级高的题目</span>
+        <span class="hljs-keyword">elif</span> rank_index &gt; self.rank_index:
+            d= rank_index - self.rank_index
+            self.progress += <span class="hljs-number">10</span> * d * d
+        
+        <span class="hljs-comment"># 如果进度大于100，升级，每减去100进度，升一级    </span>
+        <span class="hljs-keyword">while</span> self.progress &gt;= <span class="hljs-number">100</span>:
+            self.rank_index += <span class="hljs-number">1</span>
+            self.rank = self.RANKS[self.rank_index]
+            self.progress -= <span class="hljs-number">100</span>    
+        
+            <span class="hljs-comment"># 如果升到8级（最高级），进度被置为0</span>
+            <span class="hljs-keyword">if</span> self.rank == <span class="hljs-number">8</span>:
+                self.progress = <span class="hljs-number">0</span>
+                <span class="hljs-keyword">return</span>
+
+</div></code></pre>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86">第三部分 使用Mermaid绘制程序流程图</a>
+以下是根据提供的 Python 代码生成的 Mermaid 类图：</li>
+</ul>
+<h3 id="%E7%AC%AC%E4%B8%80%E9%A2%98%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%B5%B7%E7%9B%97">第一题：面向对象的海盗</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class Ship {
+        +draft: float
+        +crew: int
+        +is_worth_it(): bool
+    }
+</div></code></pre>
+<h3 id="%E7%AC%AC%E4%BA%8C%E9%A2%98%E6%90%AD%E5%BB%BA%E7%A7%AF%E6%9C%A8">第二题：搭建积木</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class Block {
+        +width: int
+        +length: int
+        +height: int
+        +get_width(): int
+        +get_length(): int
+        +get_height(): int
+        +get_volume(): int
+        +get_surface_area(): int
+    }
+</div></code></pre>
+<h3 id="%E7%AC%AC%E4%B8%89%E9%A2%98%E5%88%86%E9%A1%B5%E5%8A%A9%E6%89%8B">第三题：分页助手</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class PaginationHelper {
+        +collection: list
+        +items_per_page: int
+        +item_count(): int
+        +page_count(): int
+        +page_item_count(page_index: int): int
+        +page_index(item_index: int): int
+    }
+</div></code></pre>
+<h3 id="%E7%AC%AC%E5%9B%9B%E9%A2%98%E5%90%91%E9%87%8Fvector%E7%B1%BB">第四题：向量（Vector）类</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class Vector {
+        -_v: tuple
+        +__init__(iterable: iterable)
+        +__str__(): str
+        +check(other: Vector)
+        +add(other: Vector): Vector
+        +subtract(other: Vector): Vector
+        +dot(other: Vector): int
+        +norm(): float
+        +equals(other: Vector): bool
+    }
+</div></code></pre>
+<h3 id="%E7%AC%AC%E4%BA%94%E9%A2%98codewars%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%AD%89%E7%BA%A7%E7%B3%BB%E7%BB%9F">第五题：Codewars风格的等级系统</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class User {
+        -RANKS: list
+        -rank: int
+        -rank_index: int
+        -progress: int
+        +__init__()
+        +inc_progress(rank: int)
+    }
+</div></code></pre>
+<p>请将上述代码插入你的 Markdown 文档中，确保使用了支持 Mermaid 图的 Markdown 渲染器。</p>
+<h2 id="%E5%AE%9E%E9%AA%8C%E8%80%83%E6%9F%A5">实验考查</h2>
+<p>请使用自己的语言并使用尽量简短代码示例回答下面的问题，这些问题将在实验检查时用于提问和答辩以及实际的操作。</p>
+<p><strong>1. Python的类中__init__方法起什么作用？</strong></p>
+<p>在Python中，<code>__init__</code> 方法是一个特殊的方法，用于在创建类的实例时进行初始化操作。这个方法在对象实例化时会被自动调用。它的主要作用是执行一些在对象创建时必须进行的初始化工作，例如设置对象的属性或执行其他必要的操作。
+具体来说，<code>__init__</code> 方法用于初始化对象的属性。当你创建一个类的实例时，这个方法会被自动调用，允许你在对象创建时传递参数，并将这些参数用于设置对象的初始状态。</p>
+<p>示例：</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, parameter1, parameter2)</span>:</span>
+        self.attribute1 = parameter1
+        self.attribute2 = parameter2
+
+<span class="hljs-comment"># 创建一个类的实例并传递参数</span>
+my_instance = MyClass(<span class="hljs-string">"value1"</span>, <span class="hljs-string">"value2"</span>)
+
+<span class="hljs-comment"># 对象的属性已经被初始化</span>
+print(my_instance.attribute1)  <span class="hljs-comment"># 输出: value1</span>
+print(my_instance.attribute2)  <span class="hljs-comment"># 输出: value2</span>
+</div></code></pre>
+<p>在上述例子中，<code>__init__</code> 方法接受两个参数，<code>parameter1</code> 和 <code>parameter2</code>，并将它们分别赋值给对象的属性 <code>attribute1</code> 和 <code>attribute2</code>。这样，在创建 <code>MyClass</code> 类的实例时，可以通过传递参数来初始化对象的状态。</p>
+<p><strong>2. Python语言中如何继承父类和改写（override）父类的方法。</strong></p>
+<p>在Python中，继承和方法重写是面向对象编程的重要概念之一。下面是一个简单的例子，说明如何在子类中继承父类并改写（override）父类的方法。</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ParentClass</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name)</span>:</span>
+        self.name = name
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">say_hello</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"Hello, I'm <span class="hljs-subst">{self.name}</span> from the ParentClass."</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChildClass</span><span class="hljs-params">(ParentClass)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        <span class="hljs-comment"># 使用 super() 调用父类的初始化方法</span>
+        super().__init__(name)
+        self.age = age
+
+    <span class="hljs-comment"># 重写父类的方法</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">say_hello</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"Hello, I'm <span class="hljs-subst">{self.name}</span> and I'm <span class="hljs-subst">{self.age}</span> years old."</span>
+
+<span class="hljs-comment"># 创建父类对象</span>
+parent_obj = ParentClass(<span class="hljs-string">"Parent"</span>)
+
+<span class="hljs-comment"># 调用父类方法</span>
+print(parent_obj.say_hello())  <span class="hljs-comment"># 输出: Hello, I'm Parent from the ParentClass.</span>
+
+<span class="hljs-comment"># 创建子类对象</span>
+child_obj = ChildClass(<span class="hljs-string">"Child"</span>, <span class="hljs-number">10</span>)
+
+<span class="hljs-comment"># 调用子类方法，该方法重写了父类的方法</span>
+print(child_obj.say_hello())  <span class="hljs-comment"># 输出: Hello, I'm Child and I'm 10 years old.</span>
+</div></code></pre>
+<p>在这个例子中，<code>ParentClass</code> 是父类，<code>ChildClass</code> 是子类。子类通过继承父类，可以使用父类的属性和方法。如果子类需要修改或者定制某个方法，可以在子类中重新定义该方法，即重写（override）父类的方法。在子类中通过<code>super()</code>调用父类的方法，可以保留父类的行为并在其基础上进行扩展。</p>
+<p><strong>3. Python类有那些特殊的方法？它们的作用是什么？请举三个例子并编写简单的代码说明。</strong></p>
+<p>在Python中，类可以定义一些特殊方法（也称为魔术方法或双下划线方法），这些方法有着特殊的命名规则（以双下划线开头和结尾）。这些特殊方法允许类实例在特定的操作中表现得像内置类型一样。以下是三个常用的特殊方法及其作用的例子：</p>
+<ol>
+<li><code>__init__</code>: 用于初始化对象的方法，在对象创建时自动调用。它允许在对象创建时执行一些必要的初始化操作。</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name)</span>:</span>
+        self.name = name
+
+<span class="hljs-comment"># 创建类的实例时，__init__ 方法会自动调用</span>
+obj = MyClass(<span class="hljs-string">"example"</span>)
+print(obj.name)  <span class="hljs-comment"># 输出: example</span>
+</div></code></pre>
+<ol start="2">
+<li><code>__str__</code>: 用于返回对象的可读性良好的字符串表示。当使用 <code>print</code> 函数或 <code>str()</code> 函数时，会自动调用该方法。</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name)</span>:</span>
+        self.name = name
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__str__</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"MyClass instance with name: <span class="hljs-subst">{self.name}</span>"</span>
+
+obj = MyClass(<span class="hljs-string">"example"</span>)
+print(obj)  <span class="hljs-comment"># 输出: MyClass instance with name: example</span>
+</div></code></pre>
+<ol start="3">
+<li><code>__len__</code>: 用于返回对象的长度。当使用内置函数 <code>len()</code> 调用时，会自动调用该方法。</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyList</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, items)</span>:</span>
+        self.items = items
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__len__</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> len(self.items)
+
+my_list = MyList([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])
+print(len(my_list))  <span class="hljs-comment"># 输出: 5</span>
+</div></code></pre>
+<p>这些特殊方法允许你定制类的行为，使其在使用类似内置类型的操作时更符合预期。</p>
+<h2 id="%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93">实验总结</h2>
+<p>总结一下这次实验你学习和使用到的知识，例如：编程工具的使用、数据结构、程序语言的语法、算法、编程技巧、编程思想。</p>
+<ol>
+<li>
+<p><strong>继承和方法重写：</strong> 子类可以通过继承父类的属性和方法，同时可以在需要时重写父类的方法，以定制子类的行为。</p>
+</li>
+<li>
+<p><strong>特殊方法：</strong> Python中的类可以定义特殊方法，这些方法以双下划线开头和结尾，如 <code>__init__</code>、<code>__str__</code> 和 <code>__len__</code>。它们允许在特定的操作中定制类的行为，使对象更符合预期。</p>
+</li>
+<li>
+<p><strong>实例化和初始化：</strong> <code>__init__</code> 方法用于在对象创建时执行初始化操作，允许传递参数以设置对象的初始状态。</p>
+</li>
+<li>
+<p><strong>字符串表示和长度：</strong> <code>__str__</code> 方法用于返回对象的可读性良好的字符串表示，而 <code>__len__</code> 方法用于返回对象的长度，使类实例在使用内置函数时更方便。</p>
+</li>
+</ol>
+<p>通过理解这些概念和方法，可以更灵活地设计和使用Python中的类，提高代码的可维护性和可扩展性。</p>
+
+</body>
+</html>
